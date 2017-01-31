@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import lawrence.shuttle.data.ShuttleLocationRepository;
 import lawrence.shuttle.to.ShuttleLocation;
 
+import org.json.*;
+
 @RequestMapping("/shuttle")
 @RestController
 public class ShuttleLocationController {
@@ -20,17 +22,24 @@ public class ShuttleLocationController {
 	ShuttleLocationRepository slr;
 
 	@ResponseBody
+	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/coordinates")
-	public String getShuttleCoordinates(@RequestParam("shuttleid") String shuttleid) {
+	public ShuttleLocation getShuttleCoordinates(@RequestParam("shuttleid") String shuttleid) {
 		ShuttleLocation shuttle = slr.findLattitudeAndLongitudeByshuttleid(shuttleid);
-		return String.valueOf(shuttle.getLattitude() + " " + shuttle.getLongitude());
+		return shuttle;
 	}
 	
-	@ResponseBody
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "/coordinates", method = RequestMethod.POST)
-	public void postShuttleCoordinates(@RequestBody ShuttleLocation coordinates) {
-		this.slr.saveAndFlush(coordinates);
+	@RequestMapping(value = "/getit", method = RequestMethod.POST)
+	public void postShuttleCoordinates(@RequestBody String coordinates) {
+		System.out.println(coordinates);
+		ShuttleLocation newLoc = new ShuttleLocation();
+		JSONObject obj = new JSONObject(coordinates);
+		newLoc.setShuttleid(obj.getString("shuttleid"));
+		newLoc.setLongitude(obj.getInt("longitude"));
+		newLoc.setLattitude(obj.getInt("latitude"));
+		newLoc.setId(4);
+		slr.saveAndFlush(newLoc);
 	}
 		
 }
