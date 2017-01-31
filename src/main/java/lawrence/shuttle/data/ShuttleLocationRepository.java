@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import lawrence.shuttle.to.*;
 
 public interface ShuttleLocationRepository extends JpaRepository<ShuttleLocation, Long> {
-	  int findLattitudeByshuttleid(String shuttleid);
-	  int findLongitudeByshuttleid(String shuttleid);
+	  ShuttleLocation findLattitudeAndLongitudeByshuttleid(String shuttleid);
+	  //ShuttleLocation findLongitudeByshuttleid(String shuttleid);
 }

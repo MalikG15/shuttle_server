@@ -22,8 +22,15 @@ public class ShuttleLocationController {
 	@ResponseBody
 	@RequestMapping(value = "/coordinates")
 	public String getShuttleCoordinates(@RequestParam("shuttleid") String shuttleid) {
-		//return String.valueOf(slr.findLattitudeByShuttleId(shuttleid)) + String.valueOf(slr.findLongitudeByShuttleId(shuttleid));
-		return "";
+		ShuttleLocation shuttle = slr.findLattitudeAndLongitudeByshuttleid(shuttleid);
+		return String.valueOf(shuttle.getLattitude() + " " + shuttle.getLongitude());
+	}
+	
+	@ResponseBody
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/coordinates", method = RequestMethod.POST)
+	public void postShuttleCoordinates(@RequestBody ShuttleLocation coordinates) {
+		this.slr.saveAndFlush(coordinates);
 	}
 		
 }
