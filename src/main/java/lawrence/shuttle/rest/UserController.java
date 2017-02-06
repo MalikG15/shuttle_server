@@ -3,6 +3,7 @@ package lawrence.shuttle.rest;
 import lawrence.shuttle.to.User;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,8 +50,12 @@ public class UserController {
 	@ResponseBody
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/checkuser")
-	public String checkUser(@RequestParam("email") String email, @RequestParam("password") String password) {
-		return (userRepo.findByEmailAndPassword(email, password)).getUserid();
+	public List<String> checkUser(@RequestParam("email") String email, @RequestParam("password") String password) {
+		List<String> info = new ArrayList<String>();
+		User user = userRepo.findByEmailAndPassword(email, password);
+		info.add(user.getUserid());
+		info.add(user.getRole());
+		return info;
 	}
 	
 	
