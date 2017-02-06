@@ -1,7 +1,11 @@
 package lawrence.shuttle.to;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 
@@ -10,7 +14,8 @@ import javax.persistence.Id;
 public class ShuttleLocation {
 	  
 	@Id
-	private int id;
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	@GeneratedValue(generator = "uuid")
 	@Column(name = "shuttleid")
 	private String shuttleid;
 	@Column(name = "lattitude")
@@ -35,15 +40,6 @@ public class ShuttleLocation {
 	}
 	public void setLongitude(int longitude) {
 		this.longitude = longitude;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	
-	  	
+	} 	
 
 }

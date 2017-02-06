@@ -22,3 +22,10 @@ public class Application implements CommandLineRunner {
 		// TODO Auto-generated method stub
 	}
 }
+
+// users -> userid, name, password, role, email, phonenumber
+// stops -> stopid, name, address, latitude, longitude
+// routes -> routeid, name, stops, description
+// shuttleLocation -> shuttlelocationid, long, lat
+// clipboardsession -> clipboardsessionid, drivername, count, date
+// clipboard -> userid, long, lat, clipboardsessionid
