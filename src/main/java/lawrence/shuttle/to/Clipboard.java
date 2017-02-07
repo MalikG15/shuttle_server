@@ -2,20 +2,30 @@ package lawrence.shuttle.to;
 
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Column;
 
+@Entity
 @Table(name = "Clipboard")
 public class Clipboard {
 	
+	@Id
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	@GeneratedValue(generator = "uuid")
+	@Column(name = "clipboardid")
+	private String clipboardid;
 	@Column(name = "clipboardsessionid")
 	private String clipboardsessionid;
 	@Column(name = "userid")
 	private String userid;
 	@Column(name = "longitude")
 	private String longitude;
-	@Column(name = "lattitude")
-	private String lattiude;
+	@Column(name = "latitude")
+	private String latitude;
 	
 	public String getClipboardsessionid() {
 		return clipboardsessionid;
@@ -35,11 +45,17 @@ public class Clipboard {
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
-	public String getLattiude() {
-		return lattiude;
+	public String getLatitude() {
+		return latitude;
 	}
-	public void setLattiude(String lattiude) {
-		this.lattiude = lattiude;
+	public void setLatitude(String lattiude) {
+		this.latitude = lattiude;
+	}
+	public String getClipboardid() {
+		return clipboardid;
+	}
+	public void setClipboardid(String clipboardid) {
+		this.clipboardid = clipboardid;
 	}
 
 }

@@ -22,8 +22,8 @@ public class Stop {
 	 private String name;
 	 @Column(name = "address")
 	 private String address;
-	 @Column(name = "lattitude") 
-	 private int lattitude;
+	 @Column(name = "latitude") 
+	 private int latitude;
 	 @Column(name = "longitude")
 	 private String longitude;
 	 
@@ -45,11 +45,11 @@ public class Stop {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getLattitude() {
-		return lattitude;
+	public int getLatitude() {
+		return latitude;
 	}
-	public void setLattitude(int lattitude) {
-		this.lattitude = lattitude;
+	public void setLatitude(int lattitude) {
+		this.latitude = lattitude;
 	}
 	public String getLongitude() {
 		return longitude;

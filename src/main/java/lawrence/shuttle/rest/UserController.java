@@ -33,6 +33,29 @@ public class UserController {
 	}
 	
 	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/drivers")
+	public List<User> getDrivers() {
+		return userRepo.findAllByRole("1");
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/changerole")
+	public int changeRole(@RequestParam("userid") String userid) {
+		User user = userRepo.findByUserid(userid);
+		if (user != null) {
+			if (user.getRole().equals("1")) {
+				user.setRole("0");
+			}
+			else if (user.getRole().equals("0")) {
+				user.setRole("1");
+			}
+			userRepo.saveAndFlush(user);
+			return 0;
+		}
+		else return -1;
+	}
+	
+	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/newuser", method = RequestMethod.POST)
 	public int createNewUser(@RequestBody String user) {
 		User newUser = new User();
@@ -41,23 +64,21 @@ public class UserController {
 		newUser.setName(obj.getString("name"));
 		newUser.setPassword(obj.getString("password"));
 		newUser.setEmail(obj.getString("email"));
-		newUser.setPhonenumber(obj.getString("phonenumber"));
+		newUser.setPhonenumber(String.valueOf(obj.getInt("phonenumber")));
 		newUser.setRole(obj.getString("role"));
 		userRepo.saveAndFlush(newUser);
 		return 1;
 	}
 	
-	@ResponseBody
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/checkuser")
-	public List<String> checkUser(@RequestParam("email") String email, @RequestParam("password") String password) {
-		List<String> info = new ArrayList<String>();
+	public String checkUser(@RequestParam("email") String email, @RequestParam("password") String password) {
 		User user = userRepo.findByEmailAndPassword(email, password);
-		info.add(user.getUserid());
-		info.add(user.getRole());
-		return info;
+		JSONObject userInfo = new JSONObject();
+		userInfo.put("userid", user.getUserid());
+		userInfo.put("role", user.getRole());
+		return userInfo.toString();
 	}
-	
 	
 
 }
