@@ -34,6 +34,7 @@ public class StopController {
 		JSONObject loc = new JSONObject();
 		loc.put("longitude", stop.getLongitude());
 		loc.put("latitude", stop.getLatitude());
+		loc.put("address", stop.getAddress());
 		return loc.toString();
 	}
 

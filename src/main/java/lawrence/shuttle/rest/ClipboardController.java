@@ -43,9 +43,9 @@ public class ClipboardController {
 	@RequestMapping(value = "/checkout")
 	public int checkOut(@RequestParam("userid") String userid) {
 		Clipboard clip = clipRepo.findByUserid(userid);
-		if (clip == null) return 0;
+		if (clip == null) return -1;
 		clipRepo.deleteUsersByUserid(userid);
-		return 1;
+		return 0;
 	}
 	
 

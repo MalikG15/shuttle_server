@@ -32,5 +32,35 @@ public class RouteController {
 	public Route getRoute(@RequestParam("routeid") String routeid) {
 		return routeRepo.findByRouteid(routeid);
 	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/changeassignment")
+	public int assignRoute(@RequestParam("routeid") String routeid) {
+		Route route = routeRepo.findByRouteid(routeid);
+		if (route != null) {
+			if (route.getAssigned().equals("0")) route.setAssigned("1");
+			else if (route.getAssigned().equals("1")) route.setAssigned("0");
+			routeRepo.saveAndFlush(route);
+			return 1;
+		}
+		return 0;
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/deleteroute")
+	public int deleteRoute(@RequestParam("routeid") String routeid) {
+		Route route = routeRepo.findByRouteid(routeid);
+		if (route != null) {
+			routeRepo.deleteRouteByRouteid(routeid);
+			return 1;
+		}
+		else return 0;
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/getall") 
+	public List<Route> findAllRoutes() {
+		return routeRepo.findAll();
+	}
 
 }

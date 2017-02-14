@@ -25,7 +25,9 @@ public class Route {
 	 @Column(name = "stops")
 	 private String stops;
 	 @Column(name = "description") 
-	 private int description;
+	 private String description;
+	 @Column(name = "assigned")
+	 private String assigned;
 	 
 	public String getRouteid() {
 		return routeid;
@@ -45,11 +47,17 @@ public class Route {
 	public void setStops(String stops) {
 		this.stops = stops;
 	}
-	public int getDescription() {
+	public String getDescription() {
 		return description;
 	}
-	public void setDescription(int description) {
+	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getAssigned() {
+		return assigned;
+	}
+	public void setAssigned(String assigned) {
+		this.assigned = assigned;
 	}
 
 
