@@ -37,5 +37,25 @@ public class StopController {
 		loc.put("address", stop.getAddress());
 		return loc.toString();
 	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public void createStop(@RequestBody String stopInfo) {
+		System.out.println(stopInfo);
+		JSONObject obj = new JSONObject(stopInfo);
+		Stop stop = new Stop();
+		stop.setAddress(obj.getString("address"));
+		stop.setLongitude(obj.getString("longitude"));
+		stop.setLongitude(obj.getString("latitude"));
+		stop.setName(obj.getString("name"));
+		stopRepo.saveAndFlush(stop);
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/all")
+	public List<Stop> findAllStops() {
+		return stopRepo.findAll();
+	}
+	
 
 }

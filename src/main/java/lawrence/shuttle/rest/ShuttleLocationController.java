@@ -1,4 +1,4 @@
-/*package lawrence.shuttle.rest;
+package lawrence.shuttle.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,25 +21,34 @@ public class ShuttleLocationController {
 	@Autowired
 	ShuttleLocationRepository slr;
 
-	@ResponseBody
-	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "/coordinates")
-	public ShuttleLocation getShuttleCoordinates(@RequestParam("shuttleid") String shuttleid) {
-		ShuttleLocation shuttle = slr.findLattitudeAndLongitudeByshuttleid(shuttleid);
-		return shuttle;
+	@RequestMapping(value = "/sendlocation", method = RequestMethod.POST)
+	public int saveLocation(@RequestBody String loc) {
+		JSONObject locObj = new JSONObject(loc);
+		System.out.println(locObj.toString());
+		ShuttleLocation shuttle = slr.findBydriverid(locObj.getString("driverid"));
+		if (shuttle == null && locObj.getString("driverid") != null) {
+			shuttle = new ShuttleLocation();
+			shuttle.setDriverid(locObj.getString("driverid"));
+		} 
+		else if (locObj.getString("driverid") == null) return -1;
+		else if (locObj.getString("latitude").equals(shuttle.getLatitude()) && locObj.getString("longitude").equals(shuttle.getLongitude())) {
+			return 0;
+		}
+		//shuttle.setDriverid(locObj.getString("driverid"));
+		shuttle.setLatitude(locObj.getString("latitude"));
+		shuttle.setLongitude(locObj.getString("longitude"));
+		slr.saveAndFlush(shuttle);
+		return 1;
 	}
 	
-	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "/getit", method = RequestMethod.POST)
-	public void postShuttleCoordinates(@RequestBody String coordinates) {
-		System.out.println(coordinates);
-		ShuttleLocation newLoc = new ShuttleLocation();
-		JSONObject obj = new JSONObject(coordinates);
-		newLoc.setShuttleid(obj.getString("shuttleid"));
-		newLoc.setLongitude(obj.getInt("longitude"));
-		newLoc.setLattitude(obj.getInt("latitude"));
-		newLoc.setId(4);
-		slr.saveAndFlush(newLoc);
+	@RequestMapping(value = "/get")
+	public String getDriverLoc(@RequestParam("shuttleid") String shuttleid) {
+		ShuttleLocation shuttleloc = slr.findByshuttleid(shuttleid);
+		if (shuttleloc == null) return "";
+		JSONObject shuttleinfo = new JSONObject();
+		shuttleinfo.put("latitude", shuttleloc.getLatitude());
+		shuttleinfo.put("longitude", shuttleloc.getLongitude());
+		return shuttleinfo.toString();
 	}
 		
-}*/
+}

@@ -4,6 +4,7 @@ import lawrence.shuttle.to.User;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,9 +75,11 @@ public class UserController {
 	@RequestMapping(value = "/checkuser")
 	public String checkUser(@RequestParam("email") String email, @RequestParam("password") String password) {
 		User user = userRepo.findByEmailAndPassword(email, password);
+		if (user == null) return null;
 		JSONObject userInfo = new JSONObject();
 		userInfo.put("userid", user.getUserid());
 		userInfo.put("role", user.getRole());
+		userInfo.put("name", user.getName());
 		return userInfo.toString();
 	}
 	

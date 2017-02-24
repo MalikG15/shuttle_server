@@ -18,10 +18,12 @@ public class ShuttleLocation {
 	@GeneratedValue(generator = "uuid")
 	@Column(name = "shuttleid")
 	private String shuttleid;
-	@Column(name = "lattitude")
-	private int lattitude;
+	@Column(name = "latitude")
+	private String latitude;
 	@Column(name = "longitude")
-	private int longitude;
+	private String longitude;
+	@Column(name = "driverid")
+	private String driverid;
 	
 	public String getShuttleid() {
 		return shuttleid;
@@ -29,17 +31,23 @@ public class ShuttleLocation {
 	public void setShuttleid(String shuttleid) {
 		this.shuttleid = shuttleid;
 	}
-	public int getLattitude() {
-		return lattitude;
+	public String getLatitude() {
+		return latitude;
 	}
-	public void setLattitude(int lattitude) {
-		this.lattitude = lattitude;
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
-	public int getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(int longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
-	} 	
+	}
+	public String getDriverid() {
+		return driverid;
+	}
+	public void setDriverid(String driverid) {
+		this.driverid = driverid;
+	}
 
 }

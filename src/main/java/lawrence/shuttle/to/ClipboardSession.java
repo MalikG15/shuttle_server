@@ -25,6 +25,8 @@ public class ClipboardSession {
 	 private String count;
 	 @Column(name = "date")
 	 private Date date;
+	 @Column(name = "driverid")
+	 private String driverid;
 	 
 	public String getClipboardsessionid() {
 		return clipboardsessionid;
@@ -49,6 +51,12 @@ public class ClipboardSession {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public String getDriverid() {
+		return driverid;
+	}
+	public void setDriverid(String driverid) {
+		this.driverid = driverid;
 	}
 
 }
