@@ -14,5 +14,5 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
     @Transactional
     @Query(value = "delete from Route u where u.routeid = ?1")
 	public void deleteRouteByRouteid(String routeid);
-	public Route findRouteByAssigned(int assigned);
+	public Route findRouteByAssigned(String assigned);
 }

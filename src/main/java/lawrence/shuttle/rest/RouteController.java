@@ -68,7 +68,7 @@ public class RouteController {
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/getassigned")
 	public Route getAssigned() {
-		Route route = routeRepo.findRouteByAssigned(1);
+		Route route = routeRepo.findRouteByAssigned("1");
 		if (route == null) return null;
 		return route;
 	}
@@ -78,7 +78,7 @@ public class RouteController {
 	public int createRoute(@RequestBody String route) {
 		JSONObject routeObj = new JSONObject(route);
 		Route newRoute = new Route();
-		if (routeObj.getString("name").isEmpty() || routeObj.getString("stops").isEmpty()) return 0;
+		if ((routeObj.getString("name")).isEmpty() || (routeObj.getString("stops")).isEmpty()) return 0;
 		newRoute.setName(routeObj.getString("name"));
 		newRoute.setStops(routeObj.getString("stops"));
 		newRoute.setDescription(routeObj.getString("description"));

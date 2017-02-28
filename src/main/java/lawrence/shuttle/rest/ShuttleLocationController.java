@@ -50,5 +50,7 @@ public class ShuttleLocationController {
 		shuttleinfo.put("longitude", shuttleloc.getLongitude());
 		return shuttleinfo.toString();
 	}
+	
+	//@RequestMapping(value = "/getdefault")
 		
 }
