@@ -30,7 +30,9 @@ public class RouteController {
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/getroute")
 	public Route getRoute(@RequestParam("routeid") String routeid) {
-		return routeRepo.findByRouteid(routeid);
+		Route route = routeRepo.findByRouteid(routeid);
+		if (route == null) return null;
+		return route;
 	}
 	
 	@CrossOrigin(origins = "*")
@@ -62,5 +64,28 @@ public class RouteController {
 	public List<Route> findAllRoutes() {
 		return routeRepo.findAll();
 	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/getassigned")
+	public Route getAssigned() {
+		Route route = routeRepo.findRouteByAssigned(1);
+		if (route == null) return null;
+		return route;
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public int createRoute(@RequestBody String route) {
+		JSONObject routeObj = new JSONObject(route);
+		Route newRoute = new Route();
+		if (routeObj.getString("name").isEmpty() || routeObj.getString("stops").isEmpty()) return 0;
+		newRoute.setName(routeObj.getString("name"));
+		newRoute.setStops(routeObj.getString("stops"));
+		newRoute.setDescription(routeObj.getString("description"));
+		newRoute.setAssigned("0");
+		routeRepo.saveAndFlush(newRoute);
+		return 1;
+	}
+	
 
 }

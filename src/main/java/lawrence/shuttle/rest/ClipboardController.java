@@ -48,5 +48,13 @@ public class ClipboardController {
 		return 0;
 	}
 	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/status")
+	public int passengerStatus(@RequestParam("userid") String userid) {
+		Clipboard clip = clipRepo.findByUserid(userid);
+		if (clip == null) return 0;
+		return 1;
+	}
+	
 
 }

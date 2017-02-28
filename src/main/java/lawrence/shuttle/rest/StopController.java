@@ -28,7 +28,7 @@ public class StopController {
 	StopRepository stopRepo;
 	
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "/getstoplocation")
+	@RequestMapping(value = "/location")
 	public String getStopId(@RequestParam("stopid") String stopid) {
 		Stop stop = stopRepo.findByStopid(stopid);
 		JSONObject loc = new JSONObject();
@@ -57,5 +57,13 @@ public class StopController {
 		return stopRepo.findAll();
 	}
 	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/delete")
+	public int deleteStop(@RequestParam("stopid") String stopid) {
+		Stop stop = stopRepo.findByStopid(stopid);
+		if (stop == null) return 0;
+		stopRepo.deleteStopsByUserid(stopid);
+		return 1;
+	}
 
 }

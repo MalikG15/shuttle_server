@@ -44,7 +44,7 @@ public class ShuttleLocationController {
 	@RequestMapping(value = "/get")
 	public String getDriverLoc(@RequestParam("shuttleid") String shuttleid) {
 		ShuttleLocation shuttleloc = slr.findByshuttleid(shuttleid);
-		if (shuttleloc == null) return "";
+		if (shuttleloc == null) return "Working, but shuttleid is incorrect.";
 		JSONObject shuttleinfo = new JSONObject();
 		shuttleinfo.put("latitude", shuttleloc.getLatitude());
 		shuttleinfo.put("longitude", shuttleloc.getLongitude());
