@@ -1,7 +1,9 @@
 package lawrence.shuttle.rest;
 
 import lawrence.shuttle.to.Clipboard;
+import lawrence.shuttle.to.User;
 import lawrence.shuttle.data.ClipboardRepository;
+import lawrence.shuttle.data.UserRepository;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -24,6 +26,9 @@ public class ClipboardController {
 	
 	@Autowired
 	ClipboardRepository clipRepo;
+	
+	@Autowired
+	UserRepository userRepo;
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/checkin", method = RequestMethod.POST)
@@ -56,5 +61,29 @@ public class ClipboardController {
 		return 1;
 	}
 	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/get")
+	public List<Clipboard> getClipboard() {
+		return clipRepo.findAll();
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/getuserinfo", method = RequestMethod.POST)
+	public String getUserInfo(@RequestBody String userInfo) {
+		System.out.print(userInfo);
+		List<JSONObject> users = new ArrayList<JSONObject>();
+		JSONArray test = new JSONObject(userInfo).getJSONArray("users");
+		
+		for (int x = 0; x < test.length(); x++) {
+			JSONObject temp = new JSONObject();
+			User singleUser = userRepo.findByUserid(test.getJSONObject(x).getString("userid"));
+			temp.put("name", singleUser.getName());
+			temp.put("phonenumber", singleUser.getPhonenumber());
+			users.add(temp);
+		}
+		
+		System.out.println(new JSONObject().put("users", users).toString());
+		return new JSONObject().put("users", users).toString();
+	}
 
 }
