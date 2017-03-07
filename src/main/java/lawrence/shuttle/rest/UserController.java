@@ -75,8 +75,13 @@ public class UserController {
 	@RequestMapping(value = "/checkuser")
 	public String checkUser(@RequestParam("email") String email, @RequestParam("password") String password) {
 		User user = userRepo.findByEmailAndPassword(email, password);
-		if (user == null) return null;
 		JSONObject userInfo = new JSONObject();
+		if (user == null) {
+			userInfo.put("userid", "");
+			userInfo.put("role", "");
+			userInfo.put("name", "");
+			return userInfo.toString();
+		}
 		userInfo.put("userid", user.getUserid());
 		userInfo.put("role", user.getRole());
 		userInfo.put("name", user.getName());

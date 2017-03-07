@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lawrence.shuttle.to.Stop;
 
 public interface StopRepository extends JpaRepository<Stop, Long> {
+	public Stop findStopByLatitudeAndLongitude(String latitude, String longitude);
 	public Stop findByStopid(String stopid);
 	@Modifying
     @Transactional

@@ -41,15 +41,20 @@ public class StopController {
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public void createStop(@RequestBody String stopInfo) {
-		System.out.println(stopInfo);
+	public int createStop(@RequestBody String stopInfo) {
 		JSONObject obj = new JSONObject(stopInfo);
 		Stop stop = new Stop();
+	
+		Stop exist_stop = stopRepo.findStopByLatitudeAndLongitude(obj.getString("latitude"), obj.getString("longitude"));
+		
+		if (exist_stop != null) return 0;
+		
 		stop.setAddress(obj.getString("address"));
 		stop.setLongitude(obj.getString("longitude"));
-		stop.setLongitude(obj.getString("latitude"));
+		stop.setLatitude(obj.getString("latitude"));
 		stop.setName(obj.getString("name"));
 		stopRepo.saveAndFlush(stop);
+		return 1; 
 	}
 	
 	@CrossOrigin(origins = "*")
